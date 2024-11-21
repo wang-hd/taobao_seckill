@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # encoding=utf-8
 
-
 import os
 import json
 import platform
@@ -95,12 +94,12 @@ class ChromeDrive:
         while True:
             self.driver.get(login_url)
             try:
-                if self.driver.find_element_by_link_text("亲，请登录"):
+                if self.driver.find_element(By.LINK_TEXT, "亲，请登录"):
                     print("没登录，开始点击登录按钮...")
-                    self.driver.find_element_by_link_text("亲，请登录").click()
+                    self.driver.find_element(By.LINK_TEXT, "亲，请登录").click()
                     print("请在30s内扫码登陆!!")
                     sleep(30)
-                    if self.driver.find_element_by_xpath('//*[@id="J_SiteNavMytaobao"]/div[1]/a/span'):
+                    if self.driver.find_element(By.XPATH, '//*[@id="J_SiteNavMytaobao"]/div[1]/a/span'):
                         print("登陆成功")
                         break
                     else:
@@ -130,8 +129,8 @@ class ChromeDrive:
         self.driver.get("https://cart.taobao.com/cart.htm")
         sleep(1)
 
-        if self.driver.find_element_by_id("J_SelectAll1"):
-            self.driver.find_element_by_id("J_SelectAll1").click()
+        if self.driver.find_element(By.CSS_SELECTOR, "#cart-operation-fixed > label > span.ant-checkbox > input"):
+            self.driver.find_element(By.CSS_SELECTOR, "#cart-operation-fixed > label > span.ant-checkbox > input").click()
             print("已经选中全部商品！！！")
 
         submit_succ = False
@@ -152,14 +151,14 @@ class ChromeDrive:
 
                 try:
 
-                    if self.driver.find_element_by_id("J_Go"):
-                        self.driver.find_element_by_id("J_Go").click()
+                    if self.driver.find_element(By.CSS_SELECTOR, "#settlementContainer_1 > div:nth-child(4) > div > div.btn--QDjHtErD"):
+                        self.driver.find_element(By.CSS_SELECTOR, "#settlementContainer_1 > div:nth-child(4) > div > div.btn--QDjHtErD").click()
                         print("已经点击结算按钮...")
                         click_submit_times = 0
                         while True:
                             try:
                                 if click_submit_times < 10:
-                                    self.driver.find_element_by_link_text('提交订单').click()
+                                    self.driver.find_element(By.LINK_TEXT, '提交订单').click()
                                     print("已经点击提交订单按钮")
                                     submit_succ = True
                                     break
@@ -169,12 +168,12 @@ class ChromeDrive:
 
                                 print("没发现提交按钮, 页面未加载, 重试...")
                                 click_submit_times = click_submit_times + 1
-                                sleep(0.1)
+                                sleep(0.001)
                 except Exception as e:
                     print(e)
                     print("临时写的脚本, 可能出了点问题!!!")
 
-            sleep(0.1)
+            sleep(0.001)
         if submit_succ:
             if self.password:
                 self.pay()
