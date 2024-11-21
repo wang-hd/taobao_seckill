@@ -76,5 +76,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print(datetime.date.today())
     main()
-    # print(datetime.date.today())
